@@ -1,5 +1,6 @@
 import os
 import sys
+import numpy as np
 from Bio import SeqIO 
 
 ''' Given two matrices comprising positive and negative data,
@@ -8,32 +9,48 @@ from Bio import SeqIO
 	and then calculates testing accuracy. '''
 
 # Declaring global stuff
-K = sys.argv[1]
+K = int(sys.argv[1])
 positivefn = sys.argv[2]
-positives = []
+positive = []
 negativefn = sys.argv[3]
-negatives = []
+negative = []
+i = 0
 
-with open(positivefn) as f:
-	positives = f.readlines()
-	for p in positives:
-		p = p.split()[0]
-print(positives[0])
-
-with open(negativefn) as f:
-	negatives = f.readlines()
-	for n in negatives:
+# Reading in text files
+def read(filename):
+	name = filename.split('fn')[0]
+	with open(filename) as f:
+		name = f.readlines()
+	for n in name:
 		n = n.split()[0]
-print(negatives[0])
+	print(name[0].split()[0])
+	return name
+
+positive = read(positivefn)
+negative = read(negativefn)
 
 # Split the dataset into K equal partitions (or "folds")
-# def split_data()
+pos = np.array(positive)
+neg = np.array(negative)
+l = len(pos)
+fraction = np.round(int(l) / int(K))
+pfolds = []
+nfolds = []
 
-# def test_run(Ntestfold, ):
-	# Use fold 1 as the testing set and the union of the other folds as the training set
-	# Testing set = 30 observations (fold 1)
-	# Training set = 120 observations (folds 2-5)
+for j in range(K):
+	i = int(j*int(fraction))
+	h = int(i+int(fraction))
+	print(j,i,h)
+	pfolds.append(pos[i:h])
+	nfolds.append(neg[i:h])
+	# i = i+int(fraction)
+print(len(pfolds), len(nfolds[-1]))
 
+# Run the NN using the assigned train folds
+def test_run(testFold):
+	data = np.concatenate(pfolds[testFold],nfolds[testFold])
+	print(data.shape)
+test_run(0)
 # Calculate testing accuracy
 # def calc_accuracy():
 
