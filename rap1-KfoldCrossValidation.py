@@ -20,7 +20,7 @@ dictionary = {'A':2, 'C':-2, 'T':3, 'G':-3, 'Y':1, 'N':0}
 revdict = {2:'A', -2:'C', 3:'T', -3:'G', 1:'Y', 0:'N'}
 
 def line2bits(line):
-	# return [bin(ord(x))[2:].zfill(8) for x in line]
+	# Not actually turning letters to binary anymore, just turning them into letters
 	newline = []
 	for x in line:
 		newx = dictionary[x]
@@ -30,6 +30,7 @@ def line2bits(line):
 # print(line2bits("ATCG"))
 
 def R_sq(a, b):
+	# defining Rsquared according to the general math formula
 	hat = np.sum(a) / len(a)
 	top = []
 	bottom = []
@@ -69,6 +70,7 @@ class crossValidation(object):
 		return newdataset
 
 	def prep_data(self, testFold):
+		# combining positive and negative data, and encoding it
 		indices = list(range(K))
 		indices.remove(testFold)
 		
@@ -124,6 +126,7 @@ class crossValidation(object):
 		print(score)
 		return score
 
+
 cV = crossValidation()
 
 # Declaring global stuff
@@ -147,7 +150,7 @@ l = len(pos)
 fraction = np.round(int(l) / int(K))
 pfolds = []
 nfolds = []
-
+# make list with lists of indices for a given fold of data as entries
 for j in range(K):
 	i = int(j*int(fraction))
 	h = int(i+int(fraction))
@@ -199,7 +202,7 @@ def run_Kfold():
 
 		i += 1
 	return model, mlp
-
+# Returns a trained model
 Kfoldmodel, Kmlp = run_Kfold()
 
 # Plotting ROC curve for different folds 
@@ -229,7 +232,6 @@ avgScore = np.mean(netscores)
 avgError= np.mean(neterrors)
 print("\nThe average score for %s fold cross-validation is %s according to Scikit-learn and the accuracy is %s according to my own R^2 function." %(K, avgScore, avgError))
 
-
 # Part 5. Testing on unlabelled data
 ULdata = cV.read("rap1-lieb-test.txt",'')
 ul = cV.translate(ULdata)
@@ -237,9 +239,9 @@ ul = pd.DataFrame(ul)
 ULpredictions = Kmlp.predict(ul)
 ULrawpredicts = Kmlp.predict_proba(ul)
 rotate = ULrawpredicts.T[1]
-print(rotate[0:20])
 
 with open("predictions.txt",'w') as w:
 	w.write ("Sequence        \tProbability\n")
 	for x, y in enumerate(ULdata):
 		w.write("%s\t%s\n" %(y, rotate[x]))
+print ("Done writing.")
