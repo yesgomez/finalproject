@@ -13,9 +13,19 @@ from sklearn.model_selection import train_test_split
 	one as a training set, the remaining fold as a test set, 
 	and then calculates testing accuracy. '''
 
+dictionary = {'A':2, 'C':-2, 'T':3, 'G':-3, 'Y':1, 'N':-1}
+revdict = {2:'A', -2:'C', 3:'T', -3:'G', 1:'Y', -1:'N'}
+
 def line2bits(line):
-    return [bin(ord(x))[2:].zfill(8) for x in line]
-print(line2bits("ATCG"))
+    # return [bin(ord(x))[2:].zfill(8) for x in line]
+    newline = []
+    for x in line:
+    	newx = dictionary[x]
+    	newline.append(newx)
+    return newline
+# def line2bits(line):
+#     return [bin(ord(x))[2:].zfill(8) for x in line]
+# print(line2bits("ATCG"))
 
 class crossValidation(object):
 
@@ -67,7 +77,7 @@ class crossValidation(object):
 		return train, test
 
 	# Run the NN using the assigned train folds
-	def test_run(self, train, test):
+	def NN_run(self, train, test):
 		print ("Running the NN.")
 		# Import data as dataframes 
 		columns = list(range(17))
@@ -119,12 +129,13 @@ for j in range(K):
 	print(j,i,h)
 	pfolds.append(pos[i:h])
 	nfolds.append(neg[i:h])
-print("Number of folds:",len(pfolds), len(nfolds))
+if len(pfolds)==len(nfolds):
+	print("Number of folds:",len(pfolds))
 
-for j in range(1):
-	print ('Run', j)
+for j in range(K):
+	print ("\nRun", j)
 	train, test = cV.prep_data(j)
-	cV.test_run(train, test)
+	cV.NN_run(train, test)
 
 # Use the average testing accuracy as the estimate of out-of-sample accuracy
 # avgAcccuracy = np.average(*)
