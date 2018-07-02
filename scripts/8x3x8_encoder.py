@@ -1,4 +1,4 @@
-## Original code located in 8x3x8_encoder iPython notebook. 
+## Original version of code located in 8x3x8_encoder iPython notebook. 
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
@@ -109,7 +109,6 @@ def computeNumericalGradient(N,X,y):
 	
 	# Return params to original values
 	setParams(paramsInitial)
-
 	return numgrad 
 
 
@@ -160,9 +159,10 @@ class trainer(object):
 	identity matrix as a training set and the second half as a testing set. '''
 
 # Declaring the test inputs and outputs
+i = int(sys.argv[1])
 NN = Neural_network()
-X = np.identity(8)
-y = np.identity(8)
+X = np.identity(i)
+y = np.identity(i)
 
 # Regularization parameter
 Lambda = 0.0003
@@ -192,14 +192,16 @@ print(newgrad)
 #np.linalg.norm(grad-newgrad) / np.linalg.norm(grad+newgrad)
 
 # Using half the matrix for training and the other half for testing
-trainX = np.identity(8)[0:4]
-trainy = np.identity(8)[0:4]
-testX = np.identity(8)[4:8]
-testy = np.identity(8)[4:8]
+trainX = np.identity(i)[0:int(i/2)]
+trainy = np.identity(i)[0:int(i/2)]
+testX = np.identity(i)[int(i/2):i]
+testy = np.identity(i)[int(i/2):i]
 
+# Test and Train neural network
 T = trainer(NN)
 T.train(trainX, trainy, testX, testy)
 
+# Output cost function graph
 # plt.plot(T.J)
 # plt.plot(T.testJ)
 # plt.grid(1)
