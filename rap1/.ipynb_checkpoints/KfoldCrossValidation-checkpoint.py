@@ -127,7 +127,6 @@ class crossValidation(object):
 		return score
 
 
-
 # Declaring global stuff
 def declarations():
 	cV = crossValidation()
@@ -140,27 +139,27 @@ def declarations():
 	tprs = []
 	aucs = []
 	mean_fpr = np.linspace(0, 1, 100)
-	return 
+	return
 
-# # Split both datasets into K equal partitions (or "folds")
-# positive = cV.read(positivefn, 'Y')
-# negative = cV.read(negativefn, 'N')
-# pos = np.array(positive)
-# neg = np.array(negative)
-# combinedData = np.append(pos,neg)
-# l = len(pos)
-# fraction = np.round(int(l) / int(K))
-# pfolds = []
-# nfolds = []
-# # make list with lists of indices for a given fold of data as entries
-# for j in range(K):
-# 	i = int(j*int(fraction))
-# 	h = int(i+int(fraction))
-# 	print(j,i,h)
-# 	pfolds.append(pos[i:h])
-# 	nfolds.append(neg[i:h])
-# if len(pfolds)==len(nfolds):
-# 	print("Number of folds:",len(pfolds))
+# Split both datasets into K equal partitions (or "folds")
+positive = cV.read(positivefn, 'Y')
+negative = cV.read(negativefn, 'N')
+pos = np.array(positive)
+neg = np.array(negative)
+combinedData = np.append(pos,neg)
+l = len(pos)
+fraction = np.round(int(l) / int(K))
+pfolds = []
+nfolds = []
+# make list with lists of indices for a given fold of data as entries
+for j in range(K):
+	i = int(j*int(fraction))
+	h = int(i+int(fraction))
+	print(j,i,h)
+	pfolds.append(pos[i:h])
+	nfolds.append(neg[i:h])
+if len(pfolds)==len(nfolds):
+	print("Number of folds:",len(pfolds))
 
 # Before cross-validating, try a variety of parameters to find best mlp classifier 
 print ("\n--- Finding best classifier parameters using test data --- ")
@@ -204,7 +203,6 @@ def run_Kfold():
 
 		i += 1
 	return model, mlp
-
 # Returns a trained model
 Kfoldmodel, Kmlp = run_Kfold()
 
