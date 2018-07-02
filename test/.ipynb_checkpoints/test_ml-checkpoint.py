@@ -1,4 +1,4 @@
-from scripts.8x3x8_encoder import *
+from scripts._8x3x8_encoder import *
 import numpy as np
 
 def forward_prop_test():
@@ -40,15 +40,15 @@ def gradient_comparison_test():
 	grad = computeGradient(X,y)
 	# This measures how similar they are (should be < 10^8)
 	print (np.linalg.norm(grad-newgrad) / np.linalg.norm(grad+newgrad), "\nGradient comparison successful.")
-	
 	return
 
-# Using half the matrix for training and the other half for testing
-trainX = np.identity(8)[0:4]
-trainy = np.identity(8)[0:4]
-testX = np.identity(8)[4:8]
-testy = np.identity(8)[4:8]
+def full_train_test():
+	# Using half the matrix for training and the other half for testing
+	trainX = np.identity(8)[0:4]
+	trainy = np.identity(8)[0:4]
+	testX = np.identity(8)[4:8]
+	testy = np.identity(8)[4:8]
 
-T = trainer(NN)
-T.train(trainX, trainy, testX, testy)
+	T = trainer(NN)
+	T.train(trainX, trainy, testX, testy)
 

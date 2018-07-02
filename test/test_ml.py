@@ -1,4 +1,4 @@
-from scripts.8x3x8_encoder import *
+from scripts._8x3x8_encoder import *
 import numpy as np
 
 def forward_prop_test():
