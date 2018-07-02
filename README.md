@@ -11,7 +11,7 @@ Run using
 '''
 Test using
 
-    python -m pytest/ -v test/*
+    python -m pytest
 
 '''
 
