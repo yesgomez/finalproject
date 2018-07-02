@@ -26,8 +26,7 @@ install: "pip install -r requirements.txt"
 # alternate
 jobs:
   include:
-      #    - script: /scripts/_8x3x8_encoder.py  4 4 4  # first try 
-    - script: /scripts/_8x3x8_encoder.py  8 8 3  # real try 
+    - script: scripts/_8x3x8_encoder.py  8 8 3  # real try 
     - stage: deploy
 
 # run tests
