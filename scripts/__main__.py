@@ -68,7 +68,7 @@ plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.title('Receiver operating characteristic curve')
 plt.legend(loc="lower right")
-# plt.show()
+plt.show()
 
 # Use the average testing accuracy as the estimate of out-of-sample accuracy
 avgScore = np.mean(netscores)
@@ -76,8 +76,8 @@ avgError= np.mean(neterrors)
 print("\nThe average score for %s fold cross-validation is %s according to Scikit-learn and the accuracy is %s according to my own R^2 function." %(K, avgScore, avgError))
 
 # Part 5. Testing on unlabelled data
-ULdata = cV.read("rap1-lieb-test.txt",'')
-ul = cV.translate(ULdata)
+ULdata = cV.read("./rap1-lieb-test.txt",'')
+ul = cV.translate(ULdata,'t')
 ul = pd.DataFrame(ul)
 ULpredictions = Kmlp.predict(ul)
 ULrawpredicts = Kmlp.predict_proba(ul)
